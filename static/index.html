@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NX 游戏库</title>
+<link rel="stylesheet" href="/static/style.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%233ecf8e'/%3E%3Ctext x='8' y='12' font-size='10' text-anchor='middle' fill='%230f1115' font-family='monospace'%3EN%3C/text%3E%3C/svg%3E">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-left">
+    <h1 class="brand">NX 游戏库</h1>
+    <div class="status-dots" id="status-dots" aria-label="环境状态">
+      <span class="dot" id="dot-repo" title="仓库：检测中…"></span>
+      <span class="dot" id="dot-keys" title="prod.keys：检测中…"></span>
+      <span class="dot" id="dot-tools" title="工具链：检测中…"></span>
+    </div>
+    <div class="run-badge hidden" id="run-badge"><span class="pulse-dot"></span><span id="run-badge-text">运行中</span></div>
+  </div>
+  <div class="topbar-right">
+    <button class="btn" id="btn-settings" type="button">设置</button>
+    <button class="btn" id="btn-refresh" type="button">刷新</button>
+  </div>
+</header>
+
+<div class="warn-strip hidden" id="warn-strip"><span id="warn-strip-text"></span></div>
+
+<main class="main" id="main">
+  <div class="grid" id="grid"></div>
+  <div class="empty hidden" id="empty">
+    <div class="empty-title" id="empty-title"></div>
+    <div class="empty-desc" id="empty-desc"></div>
+    <div class="empty-actions" id="empty-actions"></div>
+  </div>
+</main>
+
+<section class="drawer" id="drawer" aria-label="构建日志">
+  <div class="drawer-head">
+    <button class="drawer-toggle" id="drawer-toggle" type="button" aria-expanded="false">
+      <span class="chevron" id="drawer-chevron">▲</span>
+      <span>构建日志</span>
+      <span class="drawer-folder mono hidden" id="drawer-folder"></span>
+    </button>
+    <div class="drawer-head-right">
+      <span class="drawer-state" id="drawer-state"></span>
+      <button class="btn btn-sm hidden" id="btn-cancel-build" type="button">取消构建</button>
+      <button class="btn btn-sm" id="btn-load-log" type="button" title="加载最近一次构建的日志尾部">加载日志</button>
+    </div>
+  </div>
+  <div class="drawer-body hidden" id="drawer-body">
+    <div class="banner hidden" id="build-banner">
+      <span class="banner-text" id="build-banner-text"></span>
+      <button class="banner-close" id="build-banner-close" type="button" aria-label="关闭">×</button>
+    </div>
+    <div class="progress-block">
+      <div class="prog-head">
+        <span class="prog-title" id="prog-title">等待构建…</span>
+        <span class="prog-meta mono" id="prog-meta"></span>
+      </div>
+      <div class="prog-bar" id="prog-bar"><div class="prog-fill" id="prog-fill"></div></div>
+      <div class="prog-say" id="prog-say"></div>
+    </div>
+    <div class="log-wrap">
+      <div class="log" id="log" tabindex="0"></div>
+      <button class="btn btn-sm log-bottom-btn hidden" id="btn-log-bottom" type="button">回到底部 ↓</button>
+    </div>
+  </div>
+</section>
+
+<div class="modal-overlay hidden" id="modal-overlay">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <h2 class="modal-title" id="modal-title">设置</h2>
+    <form id="settings-form" autocomplete="off">
+      <label class="field">
+        <span class="field-label">prod.keys 路径</span>
+        <input type="text" id="cfg-keys" placeholder="/Users/你/keys/prod.keys" spellcheck="false">
+      </label>
+      <label class="field">
+        <span class="field-label">游戏库目录</span>
+        <input type="text" id="cfg-library" placeholder="/Users/你/Games" spellcheck="false">
+      </label>
+      <label class="field">
+        <span class="field-label">游戏语言</span>
+        <select id="cfg-language">
+          <option value="">（空）默认英文</option>
+          <option value="zh-Hans">简体中文 (zh-Hans)</option>
+          <option value="zh-Hant">繁体中文 (zh-Hant)</option>
+          <option value="ja">日语 (ja)</option>
+          <option value="ko">韩语 (ko)</option>
+          <option value="en-GB">英式英语 (en-GB)</option>
+          <option value="fr">法语 (fr)</option>
+          <option value="de">德语 (de)</option>
+          <option value="es">西班牙语 (es)</option>
+          <option value="pt-br">巴西葡萄牙语 (pt-br)</option>
+        </select>
+      </label>
+      <label class="field">
+        <span class="field-label">附加环境变量（每行 KEY=VALUE）</span>
+        <textarea id="cfg-extra-env" rows="5" placeholder="DM_SCALE=1.0" spellcheck="false"></textarea>
+      </label>
+      <div class="modal-actions">
+        <button class="btn" id="btn-cancel-settings" type="button">取消</button>
+        <button class="btn primary" id="btn-save-settings" type="submit">保存</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="toasts" id="toasts" aria-live="polite"></div>
+
+<script src="/static/app.js"></script>
+</body>
+</html>
